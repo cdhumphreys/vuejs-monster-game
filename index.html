@@ -11,6 +11,26 @@
 <body>
     <div id="app">
         
+        <section class="section">
+            <div class="container">
+                <div class="box columns">
+                    <div class="column">
+                        <h1 class="title has-text-centered">You</h1>
+                        <div class="healthbar-container">
+                            <div :class="playerClasses" :style="{width: playerHealth + '%'}"></div>
+                            <div class="healthpoints">{{ playerHealth }} HP</div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <h1 class="title has-text-centered">Monster</h1>
+                        <div class="healthbar-container">
+                            <div :class="monsterClasses" :style="{width: monsterHealth + '%'}"></div>
+                            <div class="healthpoints">{{ monsterHealth }} HP</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="app.js"></script>
