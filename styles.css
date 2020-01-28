@@ -1,0 +1,26 @@
+.healthbar-container {
+    margin: 0 auto;
+    height: 50px;
+    width: 100%;
+}
+
+.healthbar {
+    height: 100%;
+
+    transition: width 250ms ease-out;
+}
+
+.healthbar--green {
+    background-color: greenyellow;
+}
+.healthbar--orange {
+    background-color: orange;
+}
+.healthbar--red {
+    background-color: orangered;
+}
+
+.healthpoints {
+    text-align: center;
+    font-weight: bold;
+}
