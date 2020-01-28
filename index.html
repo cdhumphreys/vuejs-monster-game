@@ -33,17 +33,20 @@
         <section class="section">
             <div class="container">
                 <div class="box">
-                    <div v-if="gameState == gameStates.MENU" class="level">
-                        <div class="level-item">
-                            <button @click="startGame" class="button is-primary is-large">Start Game</button>
-                        </div>
+                    <div v-if="gameState !== gameStates.IN_PROGRESS" class="column has-text-centered">
+                        <h1 v-if="gameState === gameStates.WON || gameState === gameStates.LOST" class="has-size-1 has-text-black is-uppercase has-text-weight-bold">
+                            YOU {{ gameState }}!
+                        </h1>
+                        <button @click="startGame" class="button is-primary is-large">
+                            {{ gameState === gameStates.MENU ? 'Start Game' : 'Restart' }}
+                        </button>
                     </div>
                     <!-- Battle Commands -->
                     <div v-else class="level buttons are-medium">
-                        <button class="button is-danger">Attack</button>
-                        <button class="button is-warning">Special Attack</button>
-                        <button class="button is-success">Heal</button>
-                        <button class="button">Give Up</button>
+                        <button @click="playerAttack" class="button is-danger">Attack</button>
+                        <button @click="playerSpecialAttack" class="button is-warning">Special Attack</button>
+                        <button @click="playerHeal" class="button is-success">Heal</button>
+                        <button @click="giveUp" class="button">Give Up</button>
                     </div>
                 </div>
             </div>
