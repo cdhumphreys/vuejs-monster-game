@@ -10,7 +10,6 @@
 </head>
 <body>
     <div id="app">
-        
         <section class="section">
             <div class="container">
                 <div class="box columns">
@@ -27,6 +26,37 @@
                             <div :class="monsterClasses" :style="{width: monsterHealth + '%'}"></div>
                             <div class="healthpoints">{{ monsterHealth }} HP</div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section">
+            <div class="container">
+                <div class="box">
+                    <div v-if="showStart" class="level">
+                        <div class="level-item">
+                            <button class="button is-primary is-large">Start Game</button>
+                        </div>
+                    </div>
+                    <!-- Battle Commands -->
+                    <div v-else class="level buttons are-medium">
+                        <button class="button is-danger">Attack</button>
+                        <button class="button is-warning">Special Attack</button>
+                        <button class="button is-success">Heal</button>
+                        <button class="button">Give Up</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section">
+            <div class="container">
+                <!-- Battle Log-->
+                <div class="box columns is-multiline">
+                    <div class="column is-12 has-text-centered has-background-info has-text-black-bis">
+                        You attacked the monster for 8 damage
+                    </div>
+                    <div class="column is-12 has-text-centered has-background-danger has-text-white-ter">
+                        The monster attacked you for 6 damage
                     </div>
                 </div>
             </div>

@@ -1,6 +1,14 @@
+const gameStates = {
+    menu: 'MENU',
+    inProgress: 'IN_PROGRESS',
+    won: 'WON',
+    lost: 'LOST'
+};
+
 new Vue({
     el: '#app',
     data: {
+        gameState: gameStates.menu,
         monsterHealth: 100,
         playerHealth: 100
     },
