@@ -1,8 +1,10 @@
+// Game States
 const GAME_STATE_MENU = 'MENU';
 const GAME_STATE_IN_PROGRESS = 'IN_PROGRESS';
 const GAME_STATE_WON = 'WON';
 const GAME_STATE_LOST = 'LOST';
 
+// Agents in the game
 const AGENTS_PLAYER = 'PLAYER';
 const AGENTS_MONSTER = 'MONSTER';
 
@@ -14,19 +16,29 @@ new Vue({
     data: {
         gameState: GAME_STATE_MENU,
         playerTurn: true,
+        
+        // Health pools
         monsterHealth: 100,
         playerHealth: 100,
+
+        // Player damage values
         playerMaxAttackDamage: 20,
         playerSpecialAttackModifier: 2,
         playerMaxHealAmount: 30,
+
+        // Monster damage values
         monsterMaxAttackDamage: 20,
+        
+        // Log of all actions taken in this session
         battleLog: [],
+
         gameStates: {
             MENU: GAME_STATE_MENU,
             IN_PROGRESS: GAME_STATE_IN_PROGRESS,
             WON: GAME_STATE_WON,
             LOST: GAME_STATE_LOST
         },
+
         agents: {
             PLAYER: AGENTS_PLAYER,
             MONSTER: AGENTS_MONSTER
@@ -75,13 +87,15 @@ new Vue({
 
         monsterAttack: function() {
             const vm = this;
-            // Delay monster attack slightly for clarity
+            
+            // Delay monster attack slightly for more obvious turn-based action
             setTimeout(function() {
                 if (vm.gameState === vm.gameStates.IN_PROGRESS) {
                     const damage = -1 * (Math.floor(Math.random() * vm.monsterMaxAttackDamage) + 1);
                     vm.playerHealth = Math.max(0, vm.playerHealth + damage);
                     vm.addBattleLog(vm.agents.MONSTER, vm.agents.PLAYER, damage);
-
+                    
+                    // Player turn
                     setTimeout(function() {
                         vm.playerTurn = true;
                     }, animationDelay);
@@ -91,11 +105,13 @@ new Vue({
 
         playerAttack: function() {
             if (!this.playerTurn) return;
-
+            
+            // Attack the monster
             const damage = -1 * (Math.floor(Math.random() * this.playerMaxAttackDamage) + 1);
             this.monsterHealth = Math.max(0, this.monsterHealth + damage);
             this.addBattleLog(this.agents.PLAYER, this.agents.MONSTER, damage);
-
+            
+            // Monster turn
             this.playerTurn = false;
             this.monsterAttack();
         },
@@ -103,10 +119,12 @@ new Vue({
         playerSpecialAttack: function() {
             if (!this.playerTurn) return;
 
+            // Attack the monster with higher possible damage
             const damage = -1 * (Math.floor((Math.floor(Math.random() * this.playerMaxAttackDamage) + 1) * this.playerSpecialAttackModifier));
             this.monsterHealth = Math.max(0, this.monsterHealth + damage);;
             this.addBattleLog(this.agents.PLAYER, this.agents.MONSTER, damage);
-
+            
+            // Monster turn
             this.playerTurn = false;
             this.monsterAttack();
         },
@@ -114,15 +132,18 @@ new Vue({
         playerHeal: function() {
             if (!this.playerTurn) return;
 
+            // Heal the player for random amount
             const heal = Math.floor(Math.random() * this.playerMaxHealAmount) + 1;
             this.playerHealth = Math.min(100, this.playerHealth + heal);
             this.addBattleLog(this.agents.PLAYER, this.agents.PLAYER, heal);
 
+            // Monster turn
             this.playerTurn = false;
             this.monsterAttack();
         },
 
         giveUp: function() {
+            // Give up and return to the menu
             this.initialise();
             this.gameState = this.gameStates.MENU;
         }
