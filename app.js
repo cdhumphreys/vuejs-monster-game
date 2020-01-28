@@ -12,13 +12,13 @@ const animationDelay = 250;
 new Vue({
     el: '#app',
     data: {
-        gameState: GAME_STATE_WON,
+        gameState: GAME_STATE_MENU,
         playerTurn: true,
         monsterHealth: 100,
         playerHealth: 100,
         playerMaxAttackDamage: 20,
-        playerSpecialAttackModifier: 1.2,
-        playerMaxHealAmount: 20,
+        playerSpecialAttackModifier: 2,
+        playerMaxHealAmount: 30,
         monsterMaxAttackDamage: 20,
         battleLog: [],
         gameStates: {
@@ -66,7 +66,7 @@ new Vue({
 
         addBattleLog: function(agent, target, damage) {
             // Add log recording actions taken by player or monster
-            this.battleLog.push({
+            this.battleLog.unshift({
                 agent: agent,
                 target: target,
                 damage: damage
@@ -115,7 +115,7 @@ new Vue({
             if (!this.playerTurn) return;
 
             const heal = Math.floor(Math.random() * this.playerMaxHealAmount) + 1;
-            this.playerHealth = Math.min(100, this.monsterHealth + heal);
+            this.playerHealth = Math.min(100, this.playerHealth + heal);
             this.addBattleLog(this.agents.PLAYER, this.agents.PLAYER, heal);
 
             this.playerTurn = false;

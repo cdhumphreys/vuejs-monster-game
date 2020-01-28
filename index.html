@@ -55,12 +55,17 @@
             <div class="container">
                 <!-- Battle Log-->
                 <div class="box columns is-multiline">
-                    <div class="column is-12 has-text-centered has-background-info has-text-black-bis">
-                        You attacked the monster for 8 damage
-                    </div>
-                    <div class="column is-12 has-text-centered has-background-danger has-text-white-ter">
-                        The monster attacked you for 6 damage
-                    </div>
+                    <template v-for="log in battleLog">
+                        <!-- Player -->
+                        <div v-if="log.agent === agents.PLAYER" class="column is-12 has-text-centered has-background-info has-text-black-bis">
+                            You {{ log.damage > 0 ? 'healed' : 'attacked' }} {{ log.target === agents.MONSTER ? 'the monster' : 'yourself' }} for {{ Math.abs(log.damage) }} points
+                        </div>
+                        <!-- Monster -->
+                        <div v-if="log.agent === agents.MONSTER" class="column is-12 has-text-centered has-background-danger has-text-white-ter">
+                            The monster attacked you for {{ Math.abs(log.damage) }} points
+                        </div>
+
+                    </template>
                 </div>
             </div>
         </section>
